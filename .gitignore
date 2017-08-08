@@ -32,3 +32,4 @@ DEBUG/
 *.exe
 *.out
 *.app
+/Debug/
