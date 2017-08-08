@@ -33,15 +33,45 @@ Mat backgroundSubtraction(Mat imgYCRCB, int minThresh[3], int maxThresh[3], int 
 	return finalImage;
 }
 
+Mat faceDetection(Mat original) {
+
+	Mat image;
+
+	cvtColor(original, image, CV_BGR2GRAY);
+
+	equalizeHist(image, image);
+
+	CascadeClassifier faceCascade;
+
+	faceCascade.load("haarcascade_frontalface_default.xml");
+
+	vector<Rect> faces;
+	faceCascade.detectMultiScale(image, faces);
+
+	Mat output;
+	cvtColor(image, output, CV_GRAY2BGR);
+
+	for (int i = 0; i < faces.size(); ++i) {
+		rectangle(output, faces[i], Scalar(0, 0, 255));
+
+		Mat faceROI(image, faces[i]);
+	}
+
+	return output;
+}
+
 Mat preprocess(Mat original, int minThresh[3], int maxThresh[3], int morph_size) {
 
-	Mat finalImg;
+	Mat bgSub;
 	Mat imgYCRCB;
 
+	Mat finalImg;
 
 	cvtColor(original, imgYCRCB, CV_BGR2YCrCb);
 
-	finalImg = backgroundSubtraction(imgYCRCB, minThresh, maxThresh, morph_size);
+	bgSub = backgroundSubtraction(imgYCRCB, minThresh, maxThresh, morph_size);
+
+	finalImg = faceDetection(original);
 
 	return finalImg;
 }
