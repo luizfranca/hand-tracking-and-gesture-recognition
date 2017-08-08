@@ -8,7 +8,11 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
-class Camera {
-};
+#include "opencv2/opencv.hpp"
+
+using namespace std;
+using namespace cv;
+
+Mat preprocess(Mat original, int minThresh[3], int maxThresh[3]);
 
 #endif /* CAMERA_H_ */
