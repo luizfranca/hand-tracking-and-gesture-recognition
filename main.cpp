@@ -22,6 +22,8 @@ int maxCr = 147;
 int minCb = 117;
 int maxCb = 127;
 
+int morph_size = 17;
+
 int main() {
 
 	cout << "template" << endl;
@@ -32,21 +34,24 @@ int main() {
 
 	namedWindow("image", CV_WINDOW_AUTOSIZE);
 
-	createTrackbar("MinY:", "image", &minY, 255);
-	createTrackbar("MaxY:", "image", &maxY, 255);
+//	createTrackbar("MinY:", "image", &minY, 255);
+//	createTrackbar("MaxY:", "image", &maxY, 255);
+//
+//	createTrackbar("MinCr:", "image", &minCr, 255);
+//	createTrackbar("MaxCr:", "image", &maxCr, 255);
+//
+//	createTrackbar("MinCb:", "image", &minCb, 255);
+//	createTrackbar("MaxCb:", "image", &maxCb, 255);
 
-	createTrackbar("MinCr:", "image", &minCr, 255);
-	createTrackbar("MaxCr:", "image", &maxCr, 255);
+	createTrackbar("Morph_Size:", "image", &morph_size, 21);
 
-	createTrackbar("MinCb:", "image", &minCb, 255);
-	createTrackbar("MaxCb:", "image", &maxCb, 255);
 
 	while(capture.read(currFrame)) {
 
 		int minThresh[3] = { minY, minCr, minCb };
 		int maxThresh[3] = { maxY, maxCr, maxCb };
 
-		Mat preprocessedImage = preprocess(currFrame, minThresh, maxThresh);
+		Mat preprocessedImage = preprocess(currFrame, minThresh, maxThresh, morph_size);
 
 		imshow("image", preprocessedImage);
 

@@ -13,6 +13,6 @@
 using namespace std;
 using namespace cv;
 
-Mat preprocess(Mat original, int minThresh[3], int maxThresh[3]);
+Mat preprocess(Mat original, int minThresh[3], int maxThresh[3], int morph_size);
 
 #endif /* CAMERA_H_ */
