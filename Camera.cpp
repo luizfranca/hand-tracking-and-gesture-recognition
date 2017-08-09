@@ -16,8 +16,6 @@ Mat backgroundSubtraction(Mat imgYCRCB, int minThresh[3], int maxThresh[3], int 
 
 	Mat element = getStructuringElement( 1, Size( 2*morph_size + 1, 2*morph_size+1 ), Point( morph_size, morph_size ) );
 
-//	int morph_size = 15;
-
 	for (int i = 0; i < 3; ++i) {
 		threshold(imgChannels[i], imgChannels[i], minThresh[i], maxThresh[i], THRESH_BINARY);
 
@@ -36,6 +34,7 @@ Mat backgroundSubtraction(Mat imgYCRCB, int minThresh[3], int maxThresh[3], int 
 Mat faceDetection(Mat original) {
 
 	Mat image;
+	Mat output, mask;
 
 	cvtColor(original, image, CV_BGR2GRAY);
 
@@ -48,14 +47,18 @@ Mat faceDetection(Mat original) {
 	vector<Rect> faces;
 	faceCascade.detectMultiScale(image, faces);
 
-	Mat output;
-	cvtColor(image, output, CV_GRAY2BGR);
+	uchar fillValue = 128;
+//	Mat output;
+//	floodFill(image, Point(0, 0), cv::Scalar(255) ,0, cv::Scalar(), cv::Scalar(), 4 | cv::FLOODFILL_MASK_ONLY | (fillValue << 8));
 
-	for (int i = 0; i < faces.size(); ++i) {
-		rectangle(output, faces[i], Scalar(0, 0, 255));
 
-		Mat faceROI(image, faces[i]);
-	}
+//	cvtColor(image, output, CV_GRAY2BGR);
+//
+//	for (int i = 0; i < faces.size(); ++i) {
+//		rectangle(output, faces[i], Scalar(0, 0, 255));
+//
+//		Mat faceROI(image, faces[i]);
+//	}
 
 	return output;
 }
@@ -71,7 +74,8 @@ Mat preprocess(Mat original, int minThresh[3], int maxThresh[3], int morph_size)
 
 	bgSub = backgroundSubtraction(imgYCRCB, minThresh, maxThresh, morph_size);
 
-	finalImg = faceDetection(original);
+//	finalImg = faceDetection(original);
 
-	return finalImg;
+	return bgSub;
+//	return finalImg;
 }

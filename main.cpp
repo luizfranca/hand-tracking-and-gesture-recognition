@@ -34,14 +34,14 @@ int main() {
 
 	namedWindow("image", CV_WINDOW_AUTOSIZE);
 
-//	createTrackbar("MinY:", "image", &minY, 255);
-//	createTrackbar("MaxY:", "image", &maxY, 255);
-//
-//	createTrackbar("MinCr:", "image", &minCr, 255);
-//	createTrackbar("MaxCr:", "image", &maxCr, 255);
-//
-//	createTrackbar("MinCb:", "image", &minCb, 255);
-//	createTrackbar("MaxCb:", "image", &maxCb, 255);
+	createTrackbar("MinY:", "image", &minY, 255);
+	createTrackbar("MaxY:", "image", &maxY, 255);
+
+	createTrackbar("MinCr:", "image", &minCr, 255);
+	createTrackbar("MaxCr:", "image", &maxCr, 255);
+
+	createTrackbar("MinCb:", "image", &minCb, 255);
+	createTrackbar("MaxCb:", "image", &maxCb, 255);
 
 	createTrackbar("Morph_Size:", "image", &morph_size, 21);
 
