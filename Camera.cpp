@@ -7,46 +7,7 @@
 
 #include "Camera.h"
 
-//Mat backgroundSubtraction(Mat imgYCRCB, Mat bgYCRCB, int minThresh[3], int maxThresh[3], int morph_size) {
-//
-//	Mat finalImage;
-//	Mat imgChannels[3];
-//	Mat bgChannels[3];
-//
-//	Mat absDifference = abs(imgYCRCB - bgYCRCB);
-//
-////	cout << absDifference << endl;
-//
-//	split(imgYCRCB, imgChannels);
-//	split(bgYCRCB, bgChannels);
-////	cout << "size: " << imgChannels[0].size() << endl;
-////	cout << (imgChannels[0].row(0).cols(0).) << "\n";
-////	return finalImage;
-//	Mat element = getStructuringElement(MORPH_RECT, Size(3, 3));
-////	Mat element = getStructuringElement( 1, Size( 2*morph_size + 1, 2*morph_size+1 ), Point( morph_size, morph_size ) );
-//
-//	for (int i = 0; i < 3; ++i) {
-//		threshold(imgChannels[i], imgChannels[i], 0, 255, THRESH_BINARY | THRESH_OTSU);
-//
-////		for (int j = 0; j < imgChannels[i].size(); j++) {
-////			if (abs() > 10) {
-////
-////			}
-////		}
-//
-//		morphologyEx(imgChannels[i], imgChannels[i], MORPH_OPEN, element, Point(-1, -1), 3);
-//	}
-//
-//	merge(imgChannels, 3, finalImage);
-//
-////	morphologyEx(finalImage, finalImage, MORPH_OPEN, element);
-//
-////	finalImage = imgYCRCB & bgYCRCB;
-//
-//	return finalImage;
-//}
-
-Mat backgroundSubtraction(Mat imgYCRCB, Mat bgYCRCB, int minThresh[3], int maxThresh[3], int morph_size) {
+Mat backgroundSubtraction(Mat imgYCRCB, Mat bgYCRCB, int thresh) {
 
 	Mat img = bgYCRCB - imgYCRCB;
 
@@ -58,7 +19,7 @@ Mat backgroundSubtraction(Mat imgYCRCB, Mat bgYCRCB, int minThresh[3], int maxTh
 	Mat element = getStructuringElement(MORPH_RECT, Size(3, 3));
 
 	for (int i = 0; i < 3; i++) {
-		threshold(frameChannels[i], frameChannels[i], morph_size, 255, THRESH_BINARY);
+		threshold(frameChannels[i], frameChannels[i], thresh, 255, THRESH_BINARY);
 
 		// Runs pixel erosion and dilation for three iterations
 		morphologyEx(frameChannels[i], frameChannels[i], MORPH_OPEN, element, Point(-1, -1), 3);
@@ -92,17 +53,9 @@ Mat faceDetection(Mat original) {
 
 Mat preprocess(Mat original, int minThresh[3], int maxThresh[3], int morph_size, Mat background) {
 
-//	Mat bgSub;
-//	Mat imgYCRCB;
 	Mat bgYCRCB;
-//
-//	Mat finalImg;
-//
-//	cvtColor(original, imgYCRCB, CV_BGR2YCrCb);
+
 	cvtColor(background, bgYCRCB, CV_BGR2YCrCb);
-//
-//	bgSub = backgroundSubtraction(imgYCRCB, bgYCRCB, minThresh, maxThresh, morph_size);
-//
 
 	const Scalar min_YCrCb = Scalar(0, 133, 77);
 	const Scalar max_YCrCb = Scalar(255, 173, 127);
@@ -137,9 +90,11 @@ Mat preprocess(Mat original, int minThresh[3], int maxThresh[3], int morph_size,
 
 	threshold(term1, term1, 90, 255, THRESH_BINARY);
 
-	return backgroundSubtraction(frame, bgYCRCB, minThresh, maxThresh, morph_size);;
+	return backgroundSubtraction(frame, bgYCRCB, morph_size);
 
-	frame = backgroundSubtraction(frame, bgYCRCB, minThresh, maxThresh, morph_size);
+
+
+//	frame = backgroundSubtraction(frame, bgYCRCB, minThresh, maxThresh, morph_size);
 
 //	frame = thresholdFilter(frame);
 
