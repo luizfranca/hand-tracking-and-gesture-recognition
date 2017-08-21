@@ -33,3 +33,4 @@ DEBUG/
 *.out
 *.app
 /Debug/
+.DS_STORE

@@ -28,34 +28,60 @@ int main() {
 
 	cout << "template" << endl;
 
+	namedWindow("image", CV_WINDOW_AUTOSIZE);
+
 	VideoCapture capture(0);
 
 	Mat currFrame;
 
-	namedWindow("image", CV_WINDOW_AUTOSIZE);
+	Mat background;
 
-	createTrackbar("MinY:", "image", &minY, 255);
-	createTrackbar("MaxY:", "image", &maxY, 255);
+//	while(capture.read(background)) {
+//
+//		flip(background, background, 1);
+//
+//		imshow("image", background);
+//
+//		if (waitKey(1) == 27)
+//			break;
+//	}
+//	imwrite("background.png", background);
+//	imshow("background", background);
 
-	createTrackbar("MinCr:", "image", &minCr, 255);
-	createTrackbar("MaxCr:", "image", &maxCr, 255);
+//	qimage", &maxCb, 255);
 
-	createTrackbar("MinCb:", "image", &minCb, 255);
-	createTrackbar("MaxCb:", "image", &maxCb, 255);
+	background = imread("background.png");
+//	imshow("background", background);
+	createTrackbar("Morph_Size:", "image", &morph_size, 255);
 
-	createTrackbar("Morph_Size:", "image", &morph_size, 21);
 
+//	while(true) {
+//		if (waitKey(1) == 27)
+//			break;
+//
+//	}
+
+//		createTrackbar("MinY:", "image", &minY, 255);
+//		createTrackbar("MaxY:", "image", &maxY, 255);
+//
+//		createTrackbar("MinCr:", "image", &minCr, 255);
+//		createTrackbar("MaxCr:", "image", &maxCr, 255);
+//
+//		createTrackbar("MinCb:", "image", &minCb, 255);
+//		createTrackbar("MaxCb:", "image", &maxCb, 255);
 
 	while(capture.read(currFrame)) {
+		flip(currFrame, currFrame, 1);
 
 		int minThresh[3] = { minY, minCr, minCb };
 		int maxThresh[3] = { maxY, maxCr, maxCb };
 
-		Mat preprocessedImage = preprocess(currFrame, minThresh, maxThresh, morph_size);
+		Mat preprocessedImage = preprocess(currFrame, minThresh, maxThresh, morph_size, background);
 
 		imshow("image", preprocessedImage);
 
-		waitKey(50);
+		if (waitKey(1) == 27)
+			break;
 	}
 
 
