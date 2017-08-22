@@ -91,7 +91,7 @@ Mat skinExtraction(Mat original, Mat img) {
 	return skinRegion;
 }
 
-Mat preprocess(Mat original, int minThresh[3], int maxThresh[3], int morph_size, Mat background, int lowThreshold) {
+Mat preprocess(Mat original, int morph_size, Mat background, int lowThreshold) {
 
 	Mat bgYCRCB;
 	Mat frame = original.clone();

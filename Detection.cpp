@@ -7,3 +7,7 @@
 
 #include "Detection.h"
 
+Mat detect(Mat image) {
+
+	return image;
+}

@@ -8,7 +8,11 @@
 #ifndef DETECTION_H_
 #define DETECTION_H_
 
-class Detection {
-};
+#include "opencv2/opencv.hpp"
+
+using namespace std;
+using namespace cv;
+
+Mat detect(Mat image);
 
 #endif /* DETECTION_H_ */

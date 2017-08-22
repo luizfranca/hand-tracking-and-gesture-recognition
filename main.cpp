@@ -15,15 +15,6 @@
 using namespace std;
 using namespace cv;
 
-int minY = 54;
-int maxY = 163;
-
-int minCr = 131;
-int maxCr = 157;
-
-int minCb = 110;
-int maxCb = 135;
-
 int morph_size = 120;
 
 int lowThreshold = 80;
@@ -72,25 +63,13 @@ int main() {
 	createTrackbar("Threshold:", "image", &morph_size, 255);
 //	createTrackbar("lowthreshold:", "image", &lowThreshold, 100);
 
-
-//		createTrackbar("MinY:", "image", &minY, 255);
-//		createTrackbar("MaxY:", "image", &maxY, 255);
-//
-//		createTrackbar("MinCr:", "image", &minCr, 255);
-//		createTrackbar("MaxCr:", "image", &maxCr, 255);
-//
-//		createTrackbar("MinCb:", "image", &minCb, 255);
-//		createTrackbar("MaxCb:", "image", &maxCb, 255);
-
 	while(capture.read(currFrame)) {
 		flip(currFrame, currFrame, 1);
 
-		int minThresh[3] = { minY, minCr, minCb };
-		int maxThresh[3] = { maxY, maxCr, maxCb };
+		Mat preprocessedImage = preprocess(currFrame, morph_size, background, lowThreshold);
 
-		Mat preprocessedImage = preprocess(currFrame, minThresh, maxThresh, morph_size, background, lowThreshold);
-
-		imshow("image", preprocessedImage);
+		Mat detected = detect(preprocessedImage);
+		imshow("image", detected);
 
 		if (waitKey(1) == 27) {
 			string img_name = "skin-extraction-" + currentDateTime() + ".png";
