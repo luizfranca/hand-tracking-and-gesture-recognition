@@ -10,6 +10,7 @@
 #include <iostream>
 #include "opencv2/opencv.hpp"
 #include "Camera.h"
+#include "Detection.h"
 
 using namespace std;
 using namespace cv;
