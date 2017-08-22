@@ -5,6 +5,7 @@
  *      Author: luizdaniel
  */
 
+#include <time.h>
 
 #include <iostream>
 #include "opencv2/opencv.hpp"
@@ -13,20 +14,33 @@
 using namespace std;
 using namespace cv;
 
-int minY = 89;
-int maxY = 140;
+int minY = 54;
+int maxY = 163;
 
-int minCr = 134;
-int maxCr = 147;
+int minCr = 131;
+int maxCr = 157;
 
-int minCb = 117;
-int maxCb = 127;
+int minCb = 110;
+int maxCb = 135;
 
-int morph_size = 17;
+int morph_size = 120;
+
+int lowThreshold = 80;
+
+const std::string currentDateTime() {
+    time_t     now = time(0);
+    struct tm  tstruct;
+    char       buf[80];
+    tstruct = *localtime(&now);
+
+    strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
+
+    return buf;
+}
+
 
 int main() {
-
-	cout << "template" << endl;
+	cout << "Hand Tracking and gesture Recognition" << endl;
 
 	namedWindow("image", CV_WINDOW_AUTOSIZE);
 
@@ -52,14 +66,11 @@ int main() {
 
 	background = imread("background.png");
 //	imshow("background", background);
-	createTrackbar("Morph_Size:", "image", &morph_size, 255);
 
+//	morph_size = 5;
+	createTrackbar("Threshold:", "image", &morph_size, 255);
+//	createTrackbar("lowthreshold:", "image", &lowThreshold, 100);
 
-//	while(true) {
-//		if (waitKey(1) == 27)
-//			break;
-//
-//	}
 
 //		createTrackbar("MinY:", "image", &minY, 255);
 //		createTrackbar("MaxY:", "image", &maxY, 255);
@@ -76,12 +87,16 @@ int main() {
 		int minThresh[3] = { minY, minCr, minCb };
 		int maxThresh[3] = { maxY, maxCr, maxCb };
 
-		Mat preprocessedImage = preprocess(currFrame, minThresh, maxThresh, morph_size, background);
+		Mat preprocessedImage = preprocess(currFrame, minThresh, maxThresh, morph_size, background, lowThreshold);
 
 		imshow("image", preprocessedImage);
 
-		if (waitKey(1) == 27)
+		if (waitKey(1) == 27) {
+			string img_name = "skin-extraction-" + currentDateTime() + ".png";
+
+			imwrite(img_name, preprocessedImage);
 			break;
+		}
 	}
 
 

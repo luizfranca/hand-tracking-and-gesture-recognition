@@ -34,3 +34,4 @@ DEBUG/
 *.app
 /Debug/
 .DS_STORE
+*.png
