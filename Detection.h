@@ -13,6 +13,6 @@
 using namespace std;
 using namespace cv;
 
-Mat detect(Mat image);
+Mat detect(Mat image, int thresholdSize);
 
 #endif /* DETECTION_H_ */

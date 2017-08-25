@@ -106,7 +106,7 @@ Mat preprocess(Mat original, int morph_size, Mat background, int lowThreshold) {
 
 	output = bgRemoved;
 
-	output = faceRemoval(bgRemoved, original);
+//	output = faceRemoval(bgRemoved, original);
 
 //	threshold(output, output, morph_size, 255, THRESH_BINARY);
 //	return output;
@@ -130,14 +130,12 @@ Mat preprocess(Mat original, int morph_size, Mat background, int lowThreshold) {
 
 	output = output + detect_Edges;
 
-//	cvtColor(output, output, CV_YCrCb2BGR);
-//	cvtColor(output, output, CV_BGR2GRAY);
-//
-//	output = skinExtraction(frame, output);
-//
-//	return output;
-
+	cvtColor(output, output, CV_YCrCb2BGR);
 	cvtColor(output, output, CV_BGR2GRAY);
+
+	output = skinExtraction(frame, output);
+
+//	cvtColor(output, output, CV_BGR2GRAY);
 
 	threshold(output, output, morph_size, 255, THRESH_BINARY);
 

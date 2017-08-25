@@ -42,6 +42,14 @@ int main() {
 
 	Mat background;
 
+
+//	currFrame = imread("skin.png", CV_LOAD_IMAGE_GRAYSCALE);
+//
+//	Mat detected = detect(currFrame, 500);
+//	imshow("image", detected);
+//
+//	waitKey();
+
 //	while(capture.read(background)) {
 //
 //		flip(background, background, 1);
@@ -61,14 +69,14 @@ int main() {
 
 //	morph_size = 5;
 	createTrackbar("Threshold:", "image", &morph_size, 255);
-//	createTrackbar("lowthreshold:", "image", &lowThreshold, 100);
-
+	createTrackbar("lowthreshold:", "image", &lowThreshold, 100);
+//
 	while(capture.read(currFrame)) {
 		flip(currFrame, currFrame, 1);
 
 		Mat preprocessedImage = preprocess(currFrame, morph_size, background, lowThreshold);
 
-		Mat detected = detect(preprocessedImage);
+		Mat detected = detect(preprocessedImage, 500);
 		imshow("image", detected);
 
 		if (waitKey(1) == 27) {
