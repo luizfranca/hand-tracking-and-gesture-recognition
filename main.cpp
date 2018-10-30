@@ -82,7 +82,7 @@ int main() {
 		if (waitKey(1) == 27) {
 			string img_name = "skin-extraction-" + currentDateTime() + ".png";
 
-			imwrite(img_name, preprocessedImage);
+			imwrite(img_name, detected);
 			break;
 		}
 	}

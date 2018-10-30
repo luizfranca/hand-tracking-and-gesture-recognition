@@ -45,11 +45,12 @@ Mat detect(Mat image, int thresholdSize) {
 		Mat roi = image(boundRect[i]);
 		imshow(w, roi);
 	}
-
+	imshow("Drawing", drawing);
+	imwrite("drawing.png", drawing);
 	if (boundRect.size() > 0) {
 
 //		imwrite("image", roi);
-//		imshow("Drawing", drawing);
+
 
 	}
 	return image;
